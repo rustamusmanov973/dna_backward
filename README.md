@@ -2,7 +2,7 @@
 
 Документация по скрипту «backbone.py».
 
-Скрипт создан на основе программы "backward.py" (Wassenaar et al.). Данная программа прилагается в каталоге dna_backward/ .
+Скрипт создан на основе программы "backward.py" (Wassenaar et al.). Данная программа прилагается в каталоге dna_backward/ и доступна по ссылке "https://github.com/rustamusmanov973/dna_backward/blob/master/backward.py" .
 1. Параметры запуска
 
 	Программа получает на ввод файл в формате .pdb и выдает файл в формате .gro .
