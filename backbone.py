@@ -1,5 +1,6 @@
 #This program is created on the basis of "backward.py" script freely available at "https://github.com/rustamusmanov973/dna_backward/blob/master/backward.py".
 
+authors=["Tsjerk A. Wassenaar", "Usmanov R.D."]
 import sys, random, math, re, os, itertools
 import Mapping
 
@@ -393,33 +394,18 @@ desc = ""
 # Option list
 options = [
 #   option           type         number     default   description
-    ("-f",        Option(str,           1,         None, "Input  GRO/PDB structure")),
-    ("-o",        Option(str,           1,         None, "Output GRO/PDB structure")),
-    ("-raw",      Option(str,           1,         None, "Projected structure before geometric modifications")),
-#    ("-c",        Option(str,           1,         None, "Output GRO/PDB structure of expanded CG beads for position restraints")),
-    ("-n",        Option(str,           1,         None, "Output NDX index file with default groups")),
-    ("-p",        Option(str,           1,         None, "Atomistic target topology")),
-    ("-po",       Option(str,           1,         None, "Output target topology with matching molecules list")),
-    ("-pp",       Option(str,           1,         None, "Processed target topology, with resolved #includes")),
-    ("-atomlist", Option(str,           1,         None, "Atomlist according to target topology")),
-    ("-fc",       Option(float,         1,          200, "Position restraint force constant")),
-    ("-to",       Option(str,           1,         None, "Output force field")),
-    ("-from",     Option(str,           1,         None, "Input force field")),
-    ("-strict",   Option(bool,          0,         None, "Use strict format for PDB files")),
-    ("-nt",       Option(bool,          0,         None, "Use neutral termini for proteins")),
-    ("-sol",      Option(bool,          0,         None, "Write water")),
-    ("-kick",     Option(float,         1,            0, "Random kick added to output atom positions")),
+    ("-f",        Option(str,           1,         None, "Input  PDB structure")),
+    ("-o",        Option(str,           1,         None, "Output GRO structure")),
     ]
 
 
 # Parsing arguments
 args = sys.argv[1:]
 if '-h' in args or '--help' in args:
-    print "\n",__file__
-    print desc or "\nSomeone ought to write a description for this script...\n"
+    print("\n",__file__)
+    print(desc or "\nThis script is designed to backmap corse-grained models of DNA molecules\n")
     for thing in options:
-        print type(thing) != str and "%10s  %s"%(thing[0],thing[1].description) or thing
-    print
+        print(type(thing) != str and "%10s  %s"%(thing[0],thing[1].description) or thing)
     sys.exit()
 
 
@@ -474,7 +460,7 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
     target = None
 
 
-    o, r = mapping[resn].do(residue,target,bb,nterm,cterm,options["-nt"])
+    o, r = mapping[resn].do(residue,target,bb,nterm,cterm)
     out.extend(o)
     raw.extend(r)
 new_out = []
