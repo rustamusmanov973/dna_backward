@@ -1,4 +1,4 @@
-
+#This program is created on the basis of "backward.py" script freely available at "https://github.com/rustamusmanov973/dna_backward/blob/master/backward.py".
 
 import sys, random, math, re, os, itertools
 import Mapping
