@@ -26,25 +26,31 @@ def norm(a):
 def dist(a,b):
     return math.sqrt(norm2([i-j for i,j in zip(a,b)]))
 
-_mass = {'YYYY': 243424324}
 
 # Normalization factor for geometric modifiers (nanometer)
 _normfac = 0.125
 
+_mass = {} 
 # Listing of aminoacids
 _aminoacids = [
     "ALA", "CYS", "ASP", "GLU", "PHE", "GLY", "HIS", "ILE", "LYS", "LEU",
     "MET", "ASN", "PRO", "GLN", "ARG", "SER", "THR", "VAL", "TRP", "TYR",
     "ACE", "NH2",
 ]
-DA_attributes = "C1A C2A N1A N6A".split()
-DT_attributes = "C1T O2T N3T O4T".split()
 
-def mirror_DA(x, y, z, residue):
+def mirror_D(n, x, y, z, residue):
+    if n == "DA":
+        (ch_1, ch_2) = ("C1A", "N6A")
+    elif n == "DT":
+        (ch_1, ch_2) = ("C1T", "O4T")
+    elif n == "DG":
+        (ch_1, ch_2) = ("O6G", "C1G")
+    elif n == "DC":
+        (ch_1, ch_2) = ("C1C", "N4C")
     for i in residue:
-        if i[0].strip() == "C1A":
+        if i[0].strip() == ch_1:
             a1 = tuple([i[4], i[5], i[6]])
-        elif i[0].strip() == "N6A":
+        elif i[0].strip() == ch_2:
             a2 = tuple([i[4], i[5], i[6]])
     a0 = tuple([x, y, z])
     r01 = dist(a0, a1)
@@ -58,64 +64,6 @@ def mirror_DA(x, y, z, residue):
     am = [2*ah[0]-a0[0], 2*ah[1]-a0[1], 2*ah[2]-a0[2]]
     return (am)
 
-
-def mirror_DT(x, y, z, residue):
-
-    for i in residue:
-        if i[0].strip() == "C1T":
-            a1 = tuple([i[4], i[5], i[6]])
-        elif i[0].strip() == "O4T":
-            a2 = tuple([i[4], i[5], i[6]])
-
-    a0 = tuple([x, y, z])
-    r01 = dist(a0, a1)
-    r02 = dist(a0, a2)
-    r12 = dist(a1, a2)
-    p = 0.5*(r01+r02+r12)
-    h = (2*math.sqrt(p*(p-r01)*(p-r02)*(p-r12))/r12)
-    h1 = math.sqrt(r01*r01-h*h)
-    h2 = math.sqrt(r02*r02-h*h)
-    ah = tuple([(h1*a2[0] + h2*a1[0])/(h1+h2), (h1*a2[1] + h2*a1[1])/(h1+h2), (h1*a2[2] + h2*a1[2])/(h1+h2) ])
-    am = [2*ah[0]-a0[0], 2*ah[1]-a0[1], 2*ah[2]-a0[2]]
-    return(am)
-
-def mirror_DG(x, y, z, residue):
-    for i in residue:
-        if i[0].strip() == "O6G":
-            a1 = tuple([i[4], i[5], i[6]])
-        elif i[0].strip() == "C1G":
-            a2 = tuple([i[4], i[5], i[6]])
-    a0 = tuple([x, y, z])
-    r01 = dist(a0, a1)
-    r02 = dist(a0, a2)
-    r12 = dist(a1, a2)
-    p = 0.5*(r01+r02+r12)
-    h = (2*math.sqrt(p*(p-r01)*(p-r02)*(p-r12))/r12)
-    h1 = math.sqrt(r01*r01-h*h)
-    h2 = math.sqrt(r02*r02-h*h)
-    ah = tuple([(h1*a2[0] + h2*a1[0])/(h1+h2), (h1*a2[1] + h2*a1[1])/(h1+h2), (h1*a2[2] + h2*a1[2])/(h1+h2) ])
-    am = [2*ah[0]-a0[0], 2*ah[1]-a0[1], 2*ah[2]-a0[2]]
-
-    return(am)
-
-def mirror_DC(x, y, z, residue):
-    for i in residue:
-        if i[0].strip() == "C1C":
-            a1 = tuple([i[4], i[5], i[6]])
-        elif i[0].strip() == "N4C":
-            a2 = tuple([i[4], i[5], i[6]])
-    a0 = tuple([x, y, z])
-    r01 = dist(a0, a1)
-    r02 = dist(a0, a2)
-    r12 = dist(a1, a2)
-    p = 0.5*(r01+r02+r12)
-    h = (2*math.sqrt(p*(p-r01)*(p-r02)*(p-r12))/r12)
-    h1 = math.sqrt(r01*r01-h*h)
-    h2 = math.sqrt(r02*r02-h*h)
-    ah = tuple([(h1*a2[0] + h2*a1[0])/(h1+h2), (h1*a2[1] + h2*a1[1])/(h1+h2), (h1*a2[2] + h2*a1[2])/(h1+h2) ])
-    am = [2*ah[0]-a0[0], 2*ah[1]-a0[1], 2*ah[2]-a0[2]]
-    return(am)
-
 u = 10000
 # Determine average position for a set of atoms
 def _average(mas, residue):
@@ -125,20 +73,9 @@ def _average(mas, residue):
         if j[0] == 1:
             a.append(j[1])
         else:
-            if residue[0][1].strip() == 'DA':
-                p = tuple([j[1][0], j[1][1], j[1][2], j[1][3]] + mirror_DA(j[1][4], j[1][5], j[1][6], residue))
-                a.append(p)
-            elif residue[0][1].strip() == 'DT':
-                p = tuple([j[1][0], j[1][1], j[1][2], j[1][3]] + mirror_DT(j[1][4], j[1][5], j[1][6], residue))
-                a.append(p)
-            elif residue[0][1].strip() == 'DG':
-                p = tuple([j[1][0], j[1][1], j[1][2], j[1][3]] + mirror_DG(j[1][4], j[1][5], j[1][6], residue))
-                a.append(p)
-            elif residue[0][1].strip() == 'DC':
-                p = tuple([j[1][0], j[1][1], j[1][2], j[1][3]] + mirror_DC(j[1][4], j[1][5], j[1][6], residue))
-                a.append(p)
-    print("a")
-    print(a)
+            n = residue[0][1].strip()
+            p = tuple([j[1][0], j[1][1], j[1][2], j[1][3]] + mirror_D(n, j[1][4], j[1][5], j[1][6], residue))
+            a.append(p)
     mxyz = [(_mass.get(i[0][0], 1), i[4], i[5], i[6]) for i in a if i]  # Masses and coordinates
     mw = [sum(i) for i in
         zip(*[(m * x, m * y, m * z, m) for m, x, y, z in mxyz])]
@@ -212,12 +149,11 @@ class ResidueMap:
             self.map = d
         else:
             self.atoms = x
-            print(x)
             self.map = dict(zip(x, y))
         # Special cases
         self.mod = mod
 
-    def do(self, residue, target=None, coords=False, nterm=False, cterm=False, nt=False, kick=0.05, ):
+    def do(self, residue, target=None, coords=False, nterm=False, cterm=False, nt = False, kick=0.05, ):
         # Given a set of source atoms with coordinates
         # return the corresponding list of mapped atoms
         # with suitable starting coordinates.
@@ -242,7 +178,6 @@ class ResidueMap:
 
         # Target atoms list
         if target:
-            print("sdfsdf"*90)
             # A target atom list can be given as a list of names
             # or as a list of atoms. In the latter case, each element
             # will be a list or tuple and we extract the names.
@@ -282,8 +217,6 @@ class ResidueMap:
         # from the want list.
 
         for want in atomlist:
-            print("have")
-            print(have)
             mas = []
             for i in self.map[want]:
                 if i[0] == "-":
@@ -300,12 +233,12 @@ class ResidueMap:
                 got = _average(mas, residue)
 
             if not got:
-                print "Problem determining mapping coordinates for atom %s of residue %s." % (target[0], resn)
-                print "atomlist:", atomlist
-                print "want:", want, self.map[want]
-                print "have:", have.keys()
-                print "Bailing out..."
-                print target
+                print("Problem determining mapping coordinates for atom %s of residue %s." % (target[0], resn))
+                print("atomlist:", atomlist)
+                print("want:", want, self.map[want])
+                print("have:", have.keys())
+                print("Bailing out...")
+                print(target)
                 sys.exit(1)
 
             # This logic reads the atom we want together with all atoms
@@ -448,7 +381,7 @@ def _init():
                                 try:
                                     mapping[(m, 'sirah' ,  ffi  )] = ResidueMap(atoms=aa,mod=mod,name=m)
                                 except:
-                                    print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
+                                    print("Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename))
 
                     # Reset lists
                     aa,ff,mod = [],[],[]
@@ -493,7 +426,7 @@ def _init():
                 try:
                     mapping[(m, 'sirah' ,  ffi  )] = ResidueMap(atoms=aa,mod=mod,name=m)
                 except:
-                    print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
+                    print("Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename))
 
 
     return mapping
@@ -504,8 +437,8 @@ mapping = _init()
 
 def get(target="ParmBSC1",source="sirah"):
     D = dict([(i[0],mapping[i]) for i in mapping.keys() if i[1] == source and i[2] == target])
-    print "Residues defined for transformation from %s to %s:"%(source,target)
-    print D.keys()
+    print("Residues defined for transformation from %s to %s:"%(source,target))
+    print(D.keys())
     return D
 
 mapping_mimic = get()
