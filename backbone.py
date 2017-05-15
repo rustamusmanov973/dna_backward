@@ -222,146 +222,42 @@ class Structure:
 
             for i in range(len(bb)):
                 if i+1 < len(bb):
-                    if self.sequence[i] == 'DA':
-                        if 'PX' in chain[i] and 'PX' in chain[i+1]:
-                            bb[i]["P"] = chain[i]['PX']
-                            bb[i]["O1P"] = chain[i]['PX']
-                            bb[i]["O2P"] = chain[i]['PX']
-                            bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
-                            bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
-                            bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
-                            bb[i]["C2'"] = tuple(inter(chain[i]['C1A'], chain[i+1]['PX'], 1, 2))
-                            bb[i]["C1'"] = chain[i]['C1A']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1A'], 2, 1))
-                        elif 'PX' in chain[i+1]:
-                            bb[i]["O5'"] = chain[i]['C5X']
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
-                            bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
-                            bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
-                            bb[i]["C2'"] = tuple(inter(chain[i]['C1A'], chain[i+1]['PX'], 1, 2))
-                            bb[i]["C1'"] = chain[i]['C1A']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1A'], 2, 1))
-                        elif 'PX' in chain[i]:
-                            bb[i]["P"] = chain[i]['PX']
-                            bb[i]["O1P"] = chain[i]['PX']
-                            bb[i]["O2P"] = chain[i]['PX']
-                            bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = chain[i]['C5X']
-                            bb[i]["C3'"] = chain[i]['C5X']
-                            bb[i]["O3'"] = chain[i]['C5X']
-                            bb[i]["C2'"] = chain[i]['C1A']
-                            bb[i]["C1'"] = chain[i]['C1A']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1A'], 2, 1))
+                    let = self.sequence[i][1]
 
-                    elif self.sequence[i] == 'DT':
-                        if 'PX' in chain[i] and 'PX' in chain[i+1]:
-                            bb[i]["P"] = chain[i]['PX']
-                            bb[i]["O1P"] = chain[i]['PX']
-                            bb[i]["O2P"] = chain[i]['PX']
-                            bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
-                            bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
-                            bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
-                            bb[i]["C2'"] = tuple(inter(chain[i]['C1T'], chain[i+1]['PX'], 1, 2))
-                            bb[i]["C1'"] = chain[i]['C1T']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1T'], 2, 1))
-                        elif 'PX' in chain[i+1]:
-                            bb[i]["O5'"] = chain[i]['C5X']
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
-                            bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
-                            bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
-                            bb[i]["C2'"] = tuple(inter(chain[i]['C1T'], chain[i+1]['PX'], 1, 2))
-                            bb[i]["C1'"] = chain[i]['C1T']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1T'], 2, 1))
-                        elif 'PX' in chain[i]:
-                            bb[i]["P"] = chain[i]['PX']
-                            bb[i]["O1P"] = chain[i]['PX']
-                            bb[i]["O2P"] = chain[i]['PX']
-                            bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = chain[i]['C5X']
-                            bb[i]["C3'"] = chain[i]['C5X']
-                            bb[i]["O3'"] = chain[i]['C5X']
-                            bb[i]["C2'"] = chain[i]['C1T']
-                            bb[i]["C1'"] = chain[i]['C1T']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1T'], 2, 1))
+                    if 'PX' in chain[i] and 'PX' in chain[i+1]:
+                        bb[i]["P"] = chain[i]['PX']
+                        bb[i]["O1P"] = chain[i]['PX']
+                        bb[i]["O2P"] = chain[i]['PX']
+                        bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
+                        bb[i]["C5'"] = chain[i]['C5X']
+                        bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
+                        bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
+                        bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
+                        bb[i]["C2'"] = tuple(inter(chain[i]['C1'+let], chain[i+1]['PX'], 1, 2))
+                        bb[i]["C1'"] = chain[i]['C1'+let]
+                        bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1'+let], 2, 1))
+                    elif 'PX' in chain[i+1]:
+                        bb[i]["O5'"] = chain[i]['C5X']
+                        bb[i]["C5'"] = chain[i]['C5X']
+                        bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
+                        bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
+                        bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
+                        bb[i]["C2'"] = tuple(inter(chain[i]['C1A'], chain[i+1]['PX'], 1, 2))
+                        bb[i]["C1'"] = chain[i]['C1'+let]
+                        bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1'+let], 2, 1))
+                    elif 'PX' in chain[i]:
+                        bb[i]["P"] = chain[i]['PX']
+                        bb[i]["O1P"] = chain[i]['PX']
+                        bb[i]["O2P"] = chain[i]['PX']
+                        bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
+                        bb[i]["C5'"] = chain[i]['C5X']
+                        bb[i]["C4'"] = chain[i]['C5X']
+                        bb[i]["C3'"] = chain[i]['C5X']
+                        bb[i]["O3'"] = chain[i]['C5X']
+                        bb[i]["C2'"] = chain[i]['C1'+let]
+                        bb[i]["C1'"] = chain[i]['C1'+let]
+                        bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1'+let], 2, 1))
 
-
-                    elif self.sequence[i] == 'DG':
-                        if 'PX' in chain[i] and 'PX' in chain[i+1]:
-                            bb[i]["P"] = chain[i]['PX']
-                            bb[i]["O1P"] = chain[i]['PX']
-                            bb[i]["O2P"] = chain[i]['PX']
-                            bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
-                            bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
-                            bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
-                            bb[i]["C2'"] = tuple(inter(chain[i]['C1G'], chain[i+1]['PX'], 1, 2))
-                            bb[i]["C1'"] = chain[i]['C1G']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1G'], 2, 1))
-                        elif 'PX' in chain[i+1]:
-                            bb[i]["O5'"] = chain[i]['C5X']
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
-                            bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
-                            bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
-                            bb[i]["C2'"] = tuple(inter(chain[i]['C1G'], chain[i+1]['PX'], 1, 2))
-                            bb[i]["C1'"] = chain[i]['C1G']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1G'], 2, 1))
-                        elif 'PX' in chain[i]:
-                            bb[i]["P"] = chain[i]['PX']
-                            bb[i]["O1P"] = chain[i]['PX']
-                            bb[i]["O2P"] = chain[i]['PX']
-                            bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = chain[i]['C5X']
-                            bb[i]["C3'"] = chain[i]['C5X']
-                            bb[i]["O3'"] = chain[i]['C5X']
-                            bb[i]["C2'"] = chain[i]['C1G']
-                            bb[i]["C1'"] = chain[i]['C1G']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1G'], 2, 1))
-
-                    elif self.sequence[i] == 'DC':
-                        if 'PX' in chain[i] and 'PX' in chain[i+1]:
-                            bb[i]["P"] = chain[i]['PX']
-                            bb[i]["O1P"] = chain[i]['PX']
-                            bb[i]["O2P"] = chain[i]['PX']
-                            bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
-                            bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
-                            bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
-                            bb[i]["C2'"] = tuple(inter(chain[i]['C1C'], chain[i+1]['PX'], 1, 2))
-                            bb[i]["C1'"] = chain[i]['C1C']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1C'], 2, 1))
-                        elif 'PX' in chain[i+1]:
-                            bb[i]["O5'"] = chain[i]['C5X']
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 3))
-                            bb[i]["C3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 1, 1))
-                            bb[i]["O3'"] = tuple(inter(chain[i]['C5X'], chain[i+1]['PX'], 3, 1))
-                            bb[i]["C2'"] = tuple(inter(chain[i]['C1C'], chain[i+1]['PX'], 1, 2))
-                            bb[i]["C1'"] = chain[i]['C1C']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1C'], 2, 1))
-                        elif 'PX' in chain[i]:
-                            bb[i]["P"] = chain[i]['PX']
-                            bb[i]["O1P"] = chain[i]['PX']
-                            bb[i]["O2P"] = chain[i]['PX']
-                            bb[i]["O5'"] = tuple(inter(chain[i]['C5X'],chain[i]['PX'],1,1))
-                            bb[i]["C5'"] = chain[i]['C5X']
-                            bb[i]["C4'"] = chain[i]['C5X']
-                            bb[i]["C3'"] = chain[i]['C5X']
-                            bb[i]["O3'"] = chain[i]['C5X']
-                            bb[i]["C2'"] = chain[i]['C1C']
-                            bb[i]["C1'"] = chain[i]['C1C']
-                            bb[i]["O4'"] = tuple(inter(chain[i]['C5X'], chain[i]['C1C'], 2, 1))
             print("self.backbone")
 
             self.backbone.extend(bb)
