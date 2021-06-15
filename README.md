@@ -3,11 +3,11 @@
 Документация по скрипту «backbone.py».
 
 Скрипт создан на основе программы "backward.py" (Wassenaar et al.). Данная программа прилагается в каталоге dna_backward/ и доступна по ссылке "https://github.com/rustamusmanov973/dna_backward/blob/master/backward.py" .
+0. Установка скрипта:
+git clone https://github.com/rustamusmanov973/dna_backward ~/dna_backward
 1. Параметры запуска
-
 	Программа получает на ввод файл в формате .pdb и выдает файл в формате .gro .
-
--f  input_file.pdb -o output_file.gro
+python ~/dna_backward/backbone.py -f  input_file.pdb -o output_file.gro
 
 2. Область применения программы
 
